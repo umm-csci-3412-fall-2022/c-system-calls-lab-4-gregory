@@ -3,12 +3,13 @@
 # Create a temporary scratch directory to work with
 setup() {
     BATS_TMPDIR=`mktemp --directory`
+	echo $BATS_TMPDIR
 }
 
 # Remove the scratch directory
-teardown() {
-    rm -rf "$BATS_TMPDIR"
-}
+#teardown() {
+    #rm -rf "$BATS_TMPDIR"
+#}
 
 @test "file_disemvowel exists" {
     [ -f "file_disemvowel" ]
@@ -40,7 +41,6 @@ teardown() {
 # Hit ^D to terminate the program and check taht your program
 # handles command line arguments properly.
 @test "file_disemvowel works with specified input and standard output" {
-    skip "Remove the 'skip' line in this test when you've implemented command line argument handling."
     ./file_disemvowel tests/small_input > "$BATS_TMPDIR"/small_output
     run diff -wbB tests/small_output "$BATS_TMPDIR"/small_output
     [ "$status" -eq 0 ]
@@ -56,8 +56,7 @@ teardown() {
 # of disemvoweling, then you may be writing to standard output
 # instead of to the file specified as a command line argument.
 @test "file_disemvowel works with specified input and output files" {
-    skip "Remove the 'skip' line in this test when you've implemented command line argument handling."
-    rm -f "$BATS_TMPDIR"/small_output
+        rm -f "$BATS_TMPDIR"/small_output
     ./file_disemvowel tests/small_input "$BATS_TMPDIR"/small_output
     run diff -wbB tests/small_output "$BATS_TMPDIR"/small_output
     [ "$status" -eq 0 ]
@@ -72,8 +71,7 @@ teardown() {
 # of disemvoweling, then you may be writing to standard output
 # instead of to the file specified as a command line argument.
 @test "file_disemvowel works with large specified files" {
-    skip "Remove the 'skip' line in this test when you've implemented command line argument handling."
-    ./file_disemvowel tests/as_you_like_it.txt "$BATS_TMPDIR"/as_you_like_it.output
+        ./file_disemvowel tests/as_you_like_it.txt "$BATS_TMPDIR"/as_you_like_it.output
     run diff -wbB tests/as_you_like_it_disemvowelled.txt "$BATS_TMPDIR"/as_you_like_it.output
     [ "$status" -eq 0 ]
 }

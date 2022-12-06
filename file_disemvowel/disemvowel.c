@@ -19,7 +19,7 @@ bool is_vowel(char c) {
 int copy_non_vowels(int num_chars, char* in_buf, char* out_buf) {
 	int count=0;
 	for(int i=0; i<num_chars; i++){
-		if(is_vowel(in_buf[i])){
+		if(!is_vowel(in_buf[i])){
 		out_buf[count] = in_buf[i];
 		count++;
 		}
