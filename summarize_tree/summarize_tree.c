@@ -9,7 +9,20 @@
 static int num_dirs, num_regular;
 
 bool is_dir(const char* path) {
-  /*
+   	struct stat statbuff;
+	stat(path, statbuf);
+	printFileProperties(stats);
+	if(stat(path, &statbuff) == 0){
+
+	}else{
+		printf("Unable to get file properties.\n");
+        printf("Please check whether '%s' file exists.\n", path);
+	}
+
+	return false;
+}
+	
+   /*
    * Use the stat() function (try "man 2 stat") to determine if the file
    * referenced by path is a directory or not.  Call stat, and then use
    * S_ISDIR to see if the file is a directory. Make sure you check the
