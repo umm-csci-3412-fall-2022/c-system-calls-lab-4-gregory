@@ -7,9 +7,9 @@ setup() {
 }
 
 # Remove the scratch directory
-#teardown() {
-    #rm -rf "$BATS_TMPDIR"
-#}
+teardown() {
+    rm -rf "$BATS_TMPDIR"
+}
 
 @test "file_disemvowel exists" {
     [ -f "file_disemvowel" ]
