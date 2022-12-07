@@ -8,20 +8,17 @@
 
 static int num_dirs, num_regular;
 
+
 bool is_dir(const char* path) {
-   	struct stat statbuff;
-	stat(path, statbuf);
-	printFileProperties(stats);
-	if(stat(path, &statbuff) == 0){
+   	struct stat buf;
 
+	if(stat(path, &buf) == 0){
+		return  S_ISDIR(buf.st_mode) && S_IFMT;
 	}else{
-		printf("Unable to get file properties.\n");
-        printf("Please check whether '%s' file exists.\n", path);
-	}
-
-	return false;
-}
-	
+		//printf(S_ISDIR(buf.st_mode)& S_IFMT);
+        	//printf("Please check whether '%s' file exists.\n", path);
+		return false;
+	}		
    /*
    * Use the stat() function (try "man 2 stat") to determine if the file
    * referenced by path is a directory or not.  Call stat, and then use
@@ -38,20 +35,35 @@ bool is_dir(const char* path) {
 void process_path(const char*);
 
 void process_directory(const char* path) {
-  /*
+	num_dirs++;
+
+	struct dirent *entry;
+
+	DIR *dir = opendir(path);
+
+	chdir(path);
+while ((entry = readdir(dir)) != NULL){
+      if(entry->d_name[0] != '.'){
+        process_path(entry->d_name);
+      }
+  }
+		/*
    * Update the number of directories seen, use opendir() to open the
    * directory, and then use readdir() to loop through the entries
    * and process them. You have to be careful not to process the
    * "." and ".." directory entries, or you'll end up spinning in
    * (infinite) loops. Also make sure you closedir() when you're done.
-   *
    * You'll also want to use chdir() to move into this new directory,
    * with a matching call to chdir() to move back out of it when you're
    * done.
    */
+chdir("..");
+
+closedir(dir);
 }
 
 void process_file(const char* path) {
+	num_regular++;
   /*
    * Update the number of regular files.
    * This is as simple as it seems. :-)
